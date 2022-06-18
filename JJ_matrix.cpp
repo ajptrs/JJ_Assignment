@@ -52,41 +52,47 @@ void func(vector< vector<int> > &myMatrix) { // Pass by reference to not copy en
 }
 
 void func2 (vector< vector<int> > &myMatrix) {
-    int numRow = myMatrix.size(); // Number of rows 
-    int numCol = myMatrix[0].size(); // Number columns
+    int numRows = myMatrix.size(); // Number of rows 
+    int numCols = myMatrix[0].size(); // Number columns
 
-    vector<int> onesRow(numCol, 1); // Row of ones
-    vector<int> onesCol(numRow, 1); // Column of ones
-
-    vector<int> oneRowIdx;
+    vector<int> oneRowIdx; //Record the indeces of ones
     vector<int> oneColIdx;
 
-    for (int m = 0; m < numRow; m++) { //rows
-        for (int i = 0; i < numCol; i++) { //columns
+    for (int m = 0; m < numRows; m++) { //rows
+        for (int i = 0; i < numCols; i++) { //columns
             if (myMatrix[m][i] == 1) {
-                oneRowIdx.push_back(i);
-                oneColIdx.push_back(m);
+                oneRowIdx.push_back(m);
+                oneColIdx.push_back(i);
                 cout << "row: " << m << ", column: " << i << endl;
             }
         }
     }
 
-    for (int i = 0; i < oneRowIdx.size(); i ++) {
+    //Replaces rows with all 1s
+    for (int i = 0; i < oneRowIdx.size(); i ++) { 
         int temp3 = oneRowIdx[i];
-        cout << "oneRowIdx[i]: " << temp3 << endl;
-        myMatrix[oneRowIdx[i]].swap(onesRow);
-        myPrintFunc(myMatrix);
-
+        myMatrix[oneRowIdx[i]].assign(numCols,1);
+        //cout << "After replacing all the rows: " << endl;
+        //myPrintFunc(myMatrix); 
     }
+
+    // Replaces columns with all 1s
+    for (int numConvert = 0; numConvert < oneColIdx.size(); numConvert++) { // number of rows/columns that need to change
+        for (int i = 0; i < numRows; i++) {
+            int temp1 = oneColIdx[numConvert];
+            //cout << temp1 << ", " << i << endl;
+            myMatrix[i][oneColIdx[numConvert]] = 1;
+        }
+    }
+    //cout << "After replacing all the columns: " << endl;
+      //  myPrintFunc(myMatrix); 
 }
-
-
 
 int main() {
     vector< vector<int> > myMatrix;
-    vector<int> myRow(4,0); 
+    vector<int> myRow(6,0); //Row of 4 zeros
 
-    for (int i = 0; i < myRow.size(); i++){
+    for (int i = 0; i < 3; i++){
         myMatrix.push_back(myRow);
     }
 
