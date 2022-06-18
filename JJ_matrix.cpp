@@ -1,3 +1,4 @@
+#include <iostream>
 int main() {
     int test[2][2];
     for (int i = 0; i < 2; i++) {
